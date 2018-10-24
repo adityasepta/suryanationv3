@@ -1,6 +1,6 @@
 <!-- Pengaturan Hak Akses -->
-<?php $listAkses = array(); for ($j=0; $j < count($hak) ; $j++) { ?>
-    <?php array_push($listAkses,$hak[$j]->kodeRole); ?>
+<?php $listAkses = array(); for ($xs=0; $xs < count($hak) ; $xs++) { ?>
+    <?php array_push($listAkses,$hak[$xs]->kodeRole); ?>
 <?php }?>
                 <li>
                     <a href="<?php echo base_url();?>user"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span></a>

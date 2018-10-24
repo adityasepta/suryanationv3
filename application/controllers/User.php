@@ -49,6 +49,7 @@ class User extends CI_Controller {
 
             $data['s'] = $this->mdl->getSales();
             $data['j'] = $this->mdl->getPenjadwalan();
+            // print_r($data['j']);exit();
             $data['d'] = $this->mdl->getDesain();
             $data['m'] = $this->mdl->getMenunggu();
             $data['p'] = $this->mdl->getPrint();
