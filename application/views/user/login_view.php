@@ -16,7 +16,7 @@
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
             <div>
-                <img src="<?php base_url()?>assets/img/logoss.png" height="250" width="250">
+                <img src="<?php echo base_url()?>assets/img/logoss.png" height="250" width="250">
                 <!-- <h1 class="logo-name">SS</h1> -->
 
                 

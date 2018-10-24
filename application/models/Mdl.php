@@ -14,12 +14,19 @@ class mdl extends CI_Model {
 
     public function checkAccount($username,$password) {
         
-        $sql   = "SELECT * from user where username ='" . $username . "' and password = '$password'";
-        $query = $this->db->query($sql);
-        
-        
-        if ($query->num_rows() == 1) {
-            return $query->result();
+        $query = "select username from user where username=?";
+        $cek_awal = $this->db->query($query, array($username))->row();
+        if($cek_awal){
+            $query = "select * from user where username='" . $username . "'";
+            $hasil = $this->db->query($query)->result();
+            if($hasil){
+                $pass = $hasil[0]->password;
+                if($pass == md5($password)){
+                    return $hasil;
+                }
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
