@@ -441,7 +441,7 @@ class User extends CI_Controller {
 
     public function cariPegawai() {
         $idpic = $this->input->post('idpic');
-        $data['pegawai'] = $this->mdl->findPegawai($idpic);
+        $data['pegawai'] = $this->mdl->findPegawai2($idpic);
         echo json_encode($data['pegawai']);
     }
 
@@ -8961,6 +8961,18 @@ class User extends CI_Controller {
         );
         $this->cart->update($data);
         echo $this->show_cart();
+    }
+
+    function cekPassword(){ 
+        $idUser = $this->input->post('idUser');
+        $password2 = $this->input->post('password2');
+        $data['pegawai'] = $this->mdl->findPegawai($idUser);
+        $password = $data['pegawai'][0]->password;
+        if($password==md5($password2)){
+            echo json_encode(true);
+        } else {
+            echo json_encode(false);
+        }
     }
 
 }

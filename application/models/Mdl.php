@@ -1745,6 +1745,16 @@ SELECT c.idAktivitas,c.namaAktivitas,'' as startDate , '' as endDate FROM aktivi
         }
     }
 
+    public function findPegawai2($idUser){
+        //Query mencari record berdasarkan ID
+        $hasil = $this->db->query("SELECT idUser,username,nama,jabatan,phone,email,alamat FROM user WHERE idUser = $idUser");
+        if($hasil->num_rows() > 0){
+            return $hasil->result();
+        } else{
+            return array();
+        }
+    }
+
     public function findRekap($kodeRekapProduksi){
         //Query mencari record berdasarkan ID
         $hasil = $this->db->query("SELECT a.*, c.*, e.nama, e.jabatan, f.nomorFaktur,g.namaAktivitas FROM rekapproduksi a RIGHT JOIN rekapproduksiline b ON a.kodeRekapProduksi=b.kodeRekapProduksi LEFT JOIN factproduction c ON b.idProProd = c.idProProd LEFT JOIN user e ON a.idPIC = e.idUser LEFT JOIN spk f ON c.idSPK=f.idSPK LEFT JOIN aktivitas2 g ON c.idAktivitas=g.idAktivitas  WHERE a.kodeRekapProduksi = '$kodeRekapProduksi'");

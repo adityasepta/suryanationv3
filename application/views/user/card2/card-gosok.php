@@ -434,7 +434,7 @@
             var x = document.getElementById("<?php echo $go[$i]->idProProd?>-gosok?>-cek");
             var y = document.getElementById("<?php echo $go[$i]->idProProd?>-gosok?>-cek1");
 
-            if(password==password2) {
+            if(password==md5(password2)) {
                 $('#tombolvalidasi<?php echo $go[$i]->idProProd ?>').prop('disabled', false);
                 x.style.display = "none";
                 y.style.display = "block";
