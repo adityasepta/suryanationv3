@@ -416,7 +416,7 @@
             var x = document.getElementById("<?php echo $bo[$i]->idProProd?>-boom?>-cek");
             var y = document.getElementById("<?php echo $bo[$i]->idProProd?>-boom?>-cek1");
 
-            if(password==password2) {
+            if(password==md5(password2)) {
                 $('#tombolvalidasi<?php echo $bo[$i]->idProProd ?>').prop('disabled', false);
                 x.style.display = "none";
                 y.style.display = "block";

@@ -441,7 +441,7 @@ class User extends CI_Controller {
 
     public function cariPegawai() {
         $idpic = $this->input->post('idpic');
-        $data['pegawai'] = $this->mdl->findPegawai($idpic);
+        $data['pegawai'] = $this->mdl->findPegawai2($idpic);
         echo json_encode($data['pegawai']);
     }
 
@@ -1414,7 +1414,7 @@ class User extends CI_Controller {
 
                 $dataPegawai = array(
                     'username'      => $this->input->post('username'),
-                    'password'      => $this->input->post('password'),
+                    'password'      => md5($this->input->post('password')),
                     'nama'          => $this->input->post('nama'),
                     'jabatan'       => $this->input->post('jabatan'),
                     'phone'  => $this->input->post('phone'),
@@ -1429,7 +1429,7 @@ class User extends CI_Controller {
         } else {
             $dataPegawai = array(
                 'username'      => $this->input->post('username'),
-                'password'      => $this->input->post('password'),
+                'password'      => md5($this->input->post('password')),
                 'nama'          => $this->input->post('nama'),
                 'jabatan'       => $this->input->post('jabatan'),
                 'phone'  => $this->input->post('phone'),
@@ -1445,6 +1445,9 @@ class User extends CI_Controller {
     }
 
     public function editPegawai($idUser) {
+        $passwordnow = $this->input->post('password2');
+        $passwordnew = $this->input->post('password');
+        $password = $passwordnew ? md5($passwordnew) : $passwordnow;
         if (isset($_FILES['userfile']['name'])&&!empty($_FILES['userfile']['name'])) {
             $config['upload_path']   = './uploads/fotoUser/';
             $config['allowed_types'] = 'jpg|png|bmp';
@@ -1467,10 +1470,10 @@ class User extends CI_Controller {
 
                 $dataPegawai = array(
                     'username'      => $this->input->post('username'),
-                    'password'      => $this->input->post('password'),
+                    'password'      => $password,
                     'nama'          => $this->input->post('nama'),
                     'jabatan'       => $this->input->post('jabatan'),
-                    'phone'  => $this->input->post('phone'),
+                    'phone'         => $this->input->post('phone'),
                     'email'         => $this->input->post('email'),
                     'fotoUser'      => $file_name,
                 );
@@ -1482,10 +1485,10 @@ class User extends CI_Controller {
         } else {
             $dataPegawai = array(
                 'username'      => $this->input->post('username'),
-                'password'      => $this->input->post('password'),
+                'password'      => $password,
                 'nama'          => $this->input->post('nama'),
                 'jabatan'       => $this->input->post('jabatan'),
-                'phone'  => $this->input->post('phone'),
+                'phone'         => $this->input->post('phone'),
                 'email'         => $this->input->post('email'),
             );
 
@@ -8958,6 +8961,18 @@ class User extends CI_Controller {
         );
         $this->cart->update($data);
         echo $this->show_cart();
+    }
+
+    function cekPassword(){ 
+        $idUser = $this->input->post('idUser');
+        $password2 = $this->input->post('password2');
+        $data['pegawai'] = $this->mdl->findPegawai($idUser);
+        $password = $data['pegawai'][0]->password;
+        if($password==md5($password2)){
+            echo json_encode(true);
+        } else {
+            echo json_encode(false);
+        }
     }
 
 }

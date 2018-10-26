@@ -14,12 +14,19 @@ class mdl extends CI_Model {
 
     public function checkAccount($username,$password) {
         
-        $sql   = "SELECT * from user where username ='" . $username . "' and password = '$password'";
-        $query = $this->db->query($sql);
-        
-        
-        if ($query->num_rows() == 1) {
-            return $query->result();
+        $query = "select username from user where username=?";
+        $cek_awal = $this->db->query($query, array($username))->row();
+        if($cek_awal){
+            $query = "select * from user where username='" . $username . "'";
+            $hasil = $this->db->query($query)->result();
+            if($hasil){
+                $pass = $hasil[0]->password;
+                if($pass == md5($password)){
+                    return $hasil;
+                }
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -1731,6 +1738,16 @@ SELECT c.idAktivitas,c.namaAktivitas,'' as startDate , '' as endDate FROM aktivi
     public function findPegawai($idUser){
         //Query mencari record berdasarkan ID
         $hasil = $this->db->query("SELECT * FROM user WHERE idUser = $idUser");
+        if($hasil->num_rows() > 0){
+            return $hasil->result();
+        } else{
+            return array();
+        }
+    }
+
+    public function findPegawai2($idUser){
+        //Query mencari record berdasarkan ID
+        $hasil = $this->db->query("SELECT idUser,username,nama,jabatan,phone,email,alamat FROM user WHERE idUser = $idUser");
         if($hasil->num_rows() > 0){
             return $hasil->result();
         } else{

@@ -97,17 +97,17 @@
                     $dateCreated    = $p->dateCreated;
                 }
                 ?>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                 <div class="contact-box">
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <div class="text-center">
-                            <img class="img-circle m-t-xs img-responsive" <?php if ($p->fotoUser!=NULL){?> src="<?php echo base_url();?>uploads/fotoUser/<?php echo $p->fotoUser?>" <?php } else { ?> src="<?php echo base_url();?>assets/img/profile_small.jpg" <?php } ?> alt="Image" style="display:block; margin:auto;">
-                            <div class="m-t-xs font-bold"><?php echo $p->jabatan?></div>
+                            <img class="img-circle m-t-xs img-responsive" <?php if ($p->fotoUser!=NULL){?> src="<?php echo base_url();?>uploads/fotoUser/<?php echo $p->fotoUser?>" <?php } else { ?> src="<?php echo base_url();?>assets/img/agus.jpg" <?php } ?> alt="Image" style="display:block; margin:auto;">
                         </div>
                     </div>
-                    <div class="col-sm-8">
+                    <div class="col-sm-7">
+                        <div class="m-t-xs font-bold"><?php echo $p->jabatan?></div>
                         <h3><strong><?php echo $p->nama?></strong></h3>
-                        <p><small>Bergabung pada <?php echo $dateCreated ?></small></p>
+                        <!-- <p><small>Bergabung pada <?php echo $dateCreated ?></small></p> -->
                         <p><i class="fa fa-phone"></i><?php echo " ".$p->phone?></p>
                         <p><i class="fa fa-envelope-square"></i><?php echo " ".$p->email?></p>
                         <address>
@@ -150,8 +150,10 @@
                                 <input type="text" name= "username" class="form-control" required value="<?= $username?>">
                             </div>
                             <div class="form-group">
-                                <label>Password</label>
-                                <input type="text" name= "password"  class="form-control" required value="<?= $password?>">
+                                <label>Password</label><br>
+                                <span style="color:red">Isi password jika ingin mengubahnya</span>
+                                <input type="hidden" name= "password2" value="<?= $password?>">
+                                <input type="text" name= "password"  class="form-control" value="">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -207,7 +209,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="text-center">
-                                    <img class="img-circle m-t-lg img-responsive" <?php if ($p->fotoUser!=NULL){?> src="<?php echo base_url();?>uploads/fotoUser/<?php echo $p->fotoUser?>" <?php } else { ?> src="<?php echo base_url();?>assets/img/profile_small.jpg" <?php } ?> alt="Image" style="display:block; margin:auto;">
+                                    <img class="img-circle m-t-lg img-responsive" src="<?php echo base_url();?>assets/img/agus.jpg" alt="Image" style="display:block; margin:auto;">
                                     <br>
                                     <label for="file-upload" class="custom-file-upload">
                                         <i class="fa fa-cloud-upload"></i> Ubah Gambar
