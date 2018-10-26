@@ -428,7 +428,7 @@
                                                         <label class="col-sm-3 control-label">Pilih Penerima Berat Barang Reject</label>
                                                         <div class="col-sm-9">
                                                             <?php 
-                                                            $js = array( 'class' => 'form-control', 'id' =>  $cz[$i]->idProProd."-pic");
+                                                            $js = array( 'class' => 'form-control', 'id' =>  $cz[$i]->idProProd."-picreset");
                                                             echo form_dropdown('staf', $staf, $cz[$i]->idPIC,$js);
                                                             ?>
                                                         </div>
@@ -526,21 +526,21 @@
                             <div class="form-group"><label class="col-sm-3 control-label">Password PIC</label>
 
                                 <div class="col-sm-4">
-                                    <input type="password" id="<?php echo $cz[$i]->idProProd?>-boom?>-password-2" required  value="0" name="password2" class="form-control">
-                                    <input type="hidden" id="<?php echo $cz[$i]->idProProd?>-boom?>-password-1" required value="0" name="password">
+                                    <input type="password" id="<?php echo $cz[$i]->idProProd?>-batucz?>-password-2" required  value="0" name="password2" class="form-control">
+                                    <input type="hidden" id="<?php echo $cz[$i]->idProProd?>-batucz?>-password-1" required value="0" name="password">
                                 </div>
                                 <div class="col-sm-2">
-                                    <button type="button" onclick="cekboom<?php echo $cz[$i]->idProProd?>();" class="btn btn-sm btn-primary btn-block">Cek</button>
+                                    <button type="button" onclick="cekbatucz<?php echo $cz[$i]->idProProd?>();" class="btn btn-sm btn-primary btn-block">Cek</button>
                                 </div>
                                 
                             </div>
                         </div>
                         <div class="form-horizontal" >
                             <div class="form-group">
-                            <div class="col-lg-12 text-center" id='<?php echo $cz[$i]->idProProd?>-boom?>-cek' style="display: none;">
+                            <div class="col-lg-12 text-center" id='<?php echo $cz[$i]->idProProd?>-batucz?>-cek' style="display: none;">
                                 Password tidak cocok. Silahkan coba lagi.
                             </div>
-                            <div class="col-lg-12 text-center" id='<?php echo $cz[$i]->idProProd?>-boom?>-cek1' style="display: none;">
+                            <div class="col-lg-12 text-center" id='<?php echo $cz[$i]->idProProd?>-batucz?>-cek1' style="display: none;">
                                 Password valid.
                             </div>
                              </div>
@@ -551,7 +551,7 @@
                             <button data-toggle="modal" data-dismiss="modal" data-target="#detail<?php echo $cz[$i]->idProProd ?>" class="btn btn-danger btn-block">Kembali</button>
                         </div>
                         <div class="col-lg-6">
-                            <button type="submit" class="btn btn-block btn-success" id="<?php echo $cz[$i]->idProProd?>-boom" disabled="true">Simpan</button>
+                            <button type="submit" class="btn btn-block btn-success" id="<?php echo $cz[$i]->idProProd?>-batucz" disabled="true">Simpan</button>
                         </div>
                     </div>
                     <?php echo form_close() ?>
@@ -582,32 +582,42 @@
                         var Vals = $.parseJSON(response);
                         /*console.log(Vals);*/
                         var Vals    =   JSON.parse(response);
-                        $("input[id='<?php echo $cz[$i]->idProProd?>-boom?>-password-1']").val(Vals[0].password);
+                        $("input[id='<?php echo $cz[$i]->idProProd?>-batucz?>-password-1']").val(Vals[0].idUser);
                     }
             });
         }
 </script>
 <script type="text/javascript">
-        function cekboom<?php echo $cz[$i]->idProProd?>() {
-            var password = document.getElementById('<?php echo $cz[$i]->idProProd ?>-boom?>-password-1').value;
-            var password2 = document.getElementById('<?php echo $cz[$i]->idProProd ?>-boom?>-password-2').value;
-            console.log(password);
-            console.log(password2);
-            var x = document.getElementById("<?php echo $cz[$i]->idProProd ?>-boom?>-cek");
-            var y = document.getElementById("<?php echo $cz[$i]->idProProd ?>-boom?>-cek1");
+        function cekbatucz<?php echo $cz[$i]->idProProd?>() {
+            var idUser = document.getElementById('<?php echo $cz[$i]->idProProd ?>-batucz?>-password-1').value;
+            var password2 = document.getElementById('<?php echo $cz[$i]->idProProd ?>-batucz?>-password-2').value;
 
-            if(password==password2) {
-                $('#<?php echo $cz[$i]->idProProd ?>-boom').prop('disabled', false);
-                x.style.display = "none";
-                y.style.display = "block";
-            }
-            else {
-                $('#<?php echo $cz[$i]->idProProd ?>-boom').prop('disabled', true);
-                x.style.display = "block";
-                y.style.display = "none";
-            }
+            var x = document.getElementById("<?php echo $cz[$i]->idProProd ?>-batucz?>-cek");
+            var y = document.getElementById("<?php echo $cz[$i]->idProProd ?>-batucz?>-cek1");
+
+            $.ajax({
+                    // Change the link to the file you are using
+                    url: '<?php echo base_url();?>user/cekPassword',
+                    type: 'post',
+                    // This just sends the value of the dropdown
+                    data: { 
+                        idUser,
+                        password2
+                    },
+                    success: function(response) {
+                        var response = $.parseJSON(response);
+                        if(response==true){
+                            $('#<?php echo $cz[$i]->idProProd ?>-batucz').prop('disabled', false);
+                            x.style.display = "none";
+                            y.style.display = "block";
+                        } else {
+                            $('#<?php echo $cz[$i]->idProProd ?>-batucz').prop('disabled', true);
+                            x.style.display = "block";
+                            y.style.display = "none";
+                        }
+                    }
+            });
         }
     </script>
-
 
 

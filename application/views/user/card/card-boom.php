@@ -428,7 +428,7 @@
                                                         <label class="col-sm-3 control-label">Pilih Penerima Berat Barang Reject</label>
                                                         <div class="col-sm-9">
                                                             <?php 
-                                                            $js = array( 'class' => 'form-control', 'id' =>  $bo[$i]->idProProd."-pic");
+                                                            $js = array( 'class' => 'form-control', 'id' =>  $bo[$i]->idProProd."-picreset");
                                                             echo form_dropdown('staf', $staf, $bo[$i]->idPIC,$js);
                                                             ?>
                                                         </div>
@@ -582,34 +582,42 @@
                         var Vals = $.parseJSON(response);
                         /*console.log(Vals);*/
                         var Vals    =   JSON.parse(response);
-                        $("input[id='<?php echo $bo[$i]->idProProd?>-boom?>-password-1']").val(Vals[0].password);
+                        $("input[id='<?php echo $bo[$i]->idProProd?>-boom?>-password-1']").val(Vals[0].idUser);
                     }
             });
         }
 </script>
 <script type="text/javascript">
         function cekboom<?php echo $bo[$i]->idProProd?>() {
-            var password = document.getElementById('<?php echo $bo[$i]->idProProd ?>-boom?>-password-1').value;
+            var idUser = document.getElementById('<?php echo $bo[$i]->idProProd ?>-boom?>-password-1').value;
             var password2 = document.getElementById('<?php echo $bo[$i]->idProProd ?>-boom?>-password-2').value;
-            console.log(password);
-            console.log(password2);
+
             var x = document.getElementById("<?php echo $bo[$i]->idProProd ?>-boom?>-cek");
             var y = document.getElementById("<?php echo $bo[$i]->idProProd ?>-boom?>-cek1");
 
-            if(password==password2) {
-                $('#<?php echo $bo[$i]->idProProd ?>-boom').prop('disabled', false);
-                x.style.display = "none";
-                y.style.display = "block";
-            }
-            else {
-                $('#<?php echo $bo[$i]->idProProd ?>-boom').prop('disabled', true);
-                x.style.display = "block";
-                y.style.display = "none";
-            }
+            $.ajax({
+                    // Change the link to the file you are using
+                    url: '<?php echo base_url();?>user/cekPassword',
+                    type: 'post',
+                    // This just sends the value of the dropdown
+                    data: { 
+                        idUser,
+                        password2
+                    },
+                    success: function(response) {
+                        var response = $.parseJSON(response);
+                        if(response==true){
+                            $('#<?php echo $bo[$i]->idProProd ?>-boom').prop('disabled', false);
+                            x.style.display = "none";
+                            y.style.display = "block";
+                        } else {
+                            $('#<?php echo $bo[$i]->idProProd ?>-boom').prop('disabled', true);
+                            x.style.display = "block";
+                            y.style.display = "none";
+                        }
+                    }
+            });
         }
     </script>
-
-
-
 
 

@@ -197,7 +197,7 @@
                                                                     <label class="col-sm-3 control-label">Pilih Penerima Berat Barang Reject</label>
                                                                     <div class="col-sm-9">
                                                                         <?php 
-                                                                        $js = array( 'class' => 'form-control', 'id' =>  $co[$i]->idProProd."-pic");
+                                                                        $js = array( 'class' => 'form-control', 'id' =>  $co[$i]->idProProd."-picreset");
                                                                         echo form_dropdown('staf', $staf, $co[$i]->idPIC,$js);
                                                                         ?>
                                                                     </div>
@@ -408,12 +408,12 @@
 
 </li>
 <script type="text/javascript">
-        function tambahpic<?php echo $k3[$i]->idProProd ?>() {
-            passing<?php echo $k3[$i]->idProProd ?>();
+        function tambahpic<?php echo $co[$i]->idProProd ?>() {
+            passing<?php echo $co[$i]->idProProd ?>();
         };
 
-        function passing<?php echo $k3[$i]->idProProd ?>() {
-            var pic = document.getElementById('<?php echo $k3[$i]->idProProd ?>-pic');
+        function passing<?php echo $co[$i]->idProProd ?>() {
+            var pic = document.getElementById('<?php echo $co[$i]->idProProd ?>-pic');
             var idpic = pic.options[pic.selectedIndex].value;
             console.log(idpic);
             $.ajax({
@@ -427,32 +427,43 @@
                         var Vals = $.parseJSON(response);
                         /*console.log(Vals);*/
                         var Vals    =   JSON.parse(response);
-                        $("input[id='<?php echo $k3[$i]->idProProd?>-k3?>-password-1']").val(Vals[0].password);
+                        $("input[id='<?php echo $co[$i]->idProProd?>-k3?>-password-1']").val(Vals[0].idUser);
                     }
             });
         }
 </script>
 <script type="text/javascript">
-        function cekk3<?php echo $k3[$i]->idProProd?>() {
-            var password = document.getElementById('<?php echo $k3[$i]->idProProd ?>-k3?>-password-1').value;
-            var password2 = document.getElementById('<?php echo $k3[$i]->idProProd ?>-k3?>-password-2').value;
-            console.log(password);
-            console.log(password2);
-            var x = document.getElementById("<?php echo $k3[$i]->idProProd ?>-k3?>-cek");
-            var y = document.getElementById("<?php echo $k3[$i]->idProProd ?>-k3?>-cek1");
+        function cekk3<?php echo $co[$i]->idProProd?>() {
+            var idUser = document.getElementById('<?php echo $co[$i]->idProProd ?>-k3?>-password-1').value;
+            var password2 = document.getElementById('<?php echo $co[$i]->idProProd ?>-k3?>-password-2').value;
 
-            if(password==password2) {
-                $('#<?php echo $k3[$i]->idProProd ?>-k3').prop('disabled', false);
-                x.style.display = "none";
-                y.style.display = "block";
-            }
-            else {
-                $('#<?php echo $k3[$i]->idProProd ?>-k3').prop('disabled', true);
-                x.style.display = "block";
-                y.style.display = "none";
-            }
+            var x = document.getElementById("<?php echo $co[$i]->idProProd ?>-k3?>-cek");
+            var y = document.getElementById("<?php echo $co[$i]->idProProd ?>-k3?>-cek1");
+
+            $.ajax({
+                    // Change the link to the file you are using
+                    url: '<?php echo base_url();?>user/cekPassword',
+                    type: 'post',
+                    // This just sends the value of the dropdown
+                    data: { 
+                        idUser,
+                        password2
+                    },
+                    success: function(response) {
+                        var response = $.parseJSON(response);
+                        if(response==true){
+                            $('#<?php echo $co[$i]->idProProd ?>-k3').prop('disabled', false);
+                            x.style.display = "none";
+                            y.style.display = "block";
+                        } else {
+                            $('#<?php echo $co[$i]->idProProd ?>-k3').prop('disabled', true);
+                            x.style.display = "block";
+                            y.style.display = "none";
+                        }
+                    }
+            });
         }
-    </script>    
+    </script>
   
 
 
